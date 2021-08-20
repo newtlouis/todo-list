@@ -185,9 +185,15 @@ export default {
   color: red;
 }
 
-.todo__content__input{
-  font-size: 15px;
+.todo__content__title{
+  padding: 3px;
 }
+
+.todo__content__input{
+  font-size: 15.5px;
+  background-color:rgb(228, 228, 228) ;
+  }
+
 
 .bottom__container{
   display: flex;
@@ -199,7 +205,7 @@ export default {
 }
 
 .active{
-  background-color: rgb(33, 223, 33);
+  background-color: rgb(104, 196, 104);
 }
 
 
