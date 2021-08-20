@@ -39,20 +39,20 @@ export default {
       todos : [
         {
         'id':1,
-        'title' : 'Achetez des légumes',
+        'title' : 'Acheter des légumes',
         'completed' : false,
         'editing' : false
         },
         {
         'id':2,
-        'title' : 'Appelez mamie',
+        'title' : 'Appeler mamie',
         'completed' : false,
         'editing' : false
 
         },
         {
         'id':3,
-        'title' : 'Appelez papi',
+        'title' : 'Appeler papi',
         'completed' : false,
         'editing' : false
         },
