@@ -11,7 +11,7 @@
       <div class="todo__delete" @click="removeTodo(index)">x</div>
     </div>
     <div class="bottom__container">
-      <div><label><input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos">Tout selectionné</label></div>
+      <div><label><input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos">Tous selectionnés</label></div>
       <div>{{remaining}} {{textRemaining}}</div>
     </div>
   </div>
@@ -58,8 +58,8 @@ export default {
   },
   computed: {
     remaining() {
-      let remaining = this.todos.filter(todo => !todo.completed).length
-      if(remaining > 0){return remaining}
+      let remainingTodo = this.todos.filter(todo => !todo.completed).length
+      if(remainingTodo > 0){return remainingTodo}
       else { return }
     },
     textRemaining(){
@@ -69,7 +69,8 @@ export default {
     }
     ,
     anyRemaining(){
-      return this.remaining != 0;
+      let remainingTodo = this.todos.filter(todo => !todo.completed).length
+      return remainingTodo != 0;
     }
   }
   ,
