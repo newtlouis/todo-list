@@ -5,11 +5,15 @@
 
       <div class="todo__content">
         <input type="checkbox" v-model="todo.completed">
-        <div class="todo__content__title" :class="{ todo__completed : todo.completed}" v-if="!todo.editing" @click="editTodo(todo)">{{todo.title}}</div>
+        <div class="todo__content__title" :class="{todo__completed : todo.completed}" v-if="!todo.editing" @click="editTodo(todo)">{{todo.title}}</div>
         <input class="todo__content__input" type="text" v-else v-model="todo.title" @blur="doneEditing(todo, index)" @keyup.enter="doneEditing(todo)" @keyup.esc="cancelEditing(todo)" v-focus>
       </div>
       <div class="todo__delete" @click="removeTodo(index)">x</div>
-      </div>
+    </div>
+    <div class="bottom__container">
+      <div><label><input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos">Tout selectionné</label></div>
+      <div>{{remaining}} tâches restantes</div>
+    </div>
   </div>
 </template>
 
@@ -52,6 +56,15 @@ export default {
       }
     }
   },
+  computed: {
+    remaining() {
+      return this.todos.filter(todo => !todo.completed).length
+    },
+    anyRemaining(){
+      return this.remaining != 0;
+    }
+  }
+  ,
   methods: {
     addTodo(){
       if(this.newTodo.trim().length == 0) {
@@ -89,6 +102,10 @@ export default {
     
     removeTodo(index){
       this.todos.splice(index,1)
+    },
+    checkAllTodos(){
+      console.log(event.target.checked)
+      this.todos.forEach(todo => todo.completed = event.target.checked)
     }
   }
 }
@@ -135,6 +152,14 @@ export default {
 
 .todo__content__input{
   font-size: 15px;
+}
+
+.bottom__container{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+
+  
 }
 
 </style> 
