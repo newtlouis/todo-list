@@ -1,15 +1,17 @@
 <template>
   <div>
     <input type="text" class="todo__input" v-model="newTodo" @keyup.enter="addTodo" placeholder="Qu'avez vous à faire ?" >
-    <div v-for="(todo, index) in todosFiltered" :key="todo.id" class="todo__list">
-
-      <div class="todo__content">
-        <input type="checkbox" v-model="todo.completed">
-        <div class="todo__content__title" :class="{todo__completed : todo.completed}" v-if="!todo.editing" @click="editTodo(todo)">{{todo.title}}</div>
-        <input class="todo__content__input" type="text" v-else v-model="todo.title" @blur="doneEditing(todo, index)" @keyup.enter="doneEditing(todo)" @keyup.esc="cancelEditing(todo)" v-focus>
+    <transition-group name="slide-fade">
+      <div v-for="(todo, index) in todosFiltered" :key="todo.id" class="todo__list">
+        <div class="todo__content">
+          <input type="checkbox" v-model="todo.completed">
+          <div class="todo__content__title" :class="{todo__completed : todo.completed}" v-if="!todo.editing" @click="editTodo(todo)">{{todo.title}}</div>
+          <input class="todo__content__input" type="text" v-else v-model="todo.title" @blur="doneEditing(todo, index)" @keyup.enter="doneEditing(todo)" @keyup.esc="cancelEditing(todo)" v-focus>
+        </div>
+        <div class="todo__delete" @click="removeTodo(index)">x</div>
       </div>
-      <div class="todo__delete" @click="removeTodo(index)">x</div>
-    </div>
+    </transition-group>
+    
     <div class="bottom__container">
       <div><label><input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos">Tous selectionnés</label></div>
       <div>{{remaining}} {{textRemaining}}</div>
@@ -21,7 +23,9 @@
         <button :class="{active : filter == 'notCompleted'}" @click="filter = 'notCompleted'">Inachevées</button>
       </div>
       <div>
-        <button v-if="isThereCompletedTodos" @click="deleteCompletedTodos()">Supprimer les tâches achevées</button>
+        <transition name="fade">
+          <button v-if="isThereCompletedTodos" @click="deleteCompletedTodos()">Supprimer les tâches achevées</button>
+        </transition>
       </div>
     </div>
   </div>
@@ -170,6 +174,7 @@ export default {
 
 .todo__content{
   display: flex;
+  align-items: center;
 }
 
 .todo__completed{
@@ -208,7 +213,24 @@ export default {
   background-color: rgb(104, 196, 104);
 }
 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
 
 </style> 
 
