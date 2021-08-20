@@ -21,7 +21,7 @@
         <button :class="{active : filter == 'notCompleted'}" @click="filter = 'notCompleted'">Inachevées</button>
       </div>
       <div>
-        <!-- <button v-if="isThereCompletedTodos" @click="deleteCompletedTodos()">Supprimer les tâches achevées</button> -->
+        <button v-if="isThereCompletedTodos" @click="deleteCompletedTodos()">Supprimer les tâches achevées</button>
       </div>
     </div>
   </div>
@@ -91,6 +91,10 @@ export default {
     anyRemaining(){
       let remainingTodo = this.todos.filter(todo => !todo.completed).length
       return remainingTodo != 0;
+    },
+    isThereCompletedTodos(){
+      if (this.todos.filter(todo => todo.completed).length != 0){return true}
+      else {return false}
     }
   }
   ,
@@ -134,6 +138,9 @@ export default {
     },
     checkAllTodos(){
       this.todos.forEach(todo => todo.completed = event.target.checked)
+    },
+    deleteCompletedTodos(){
+      this.todos = this.todos.filter(todo => !todo.completed)
     }
   }
 }
