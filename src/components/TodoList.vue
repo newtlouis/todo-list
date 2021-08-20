@@ -4,7 +4,8 @@
     <div v-for="(todo, index) in todos" :key="todo.id" class="todo__list">
 
       <div class="todo__content">
-        <div class="todo__content__title" v-if="!todo.editing" @click="editTodo(todo)">{{todo.title}}</div>
+        <input type="checkbox" v-model="todo.completed">
+        <div class="todo__content__title" :class="{ todo__completed : todo.completed}" v-if="!todo.editing" @click="editTodo(todo)">{{todo.title}}</div>
         <input class="todo__content__input" type="text" v-else v-model="todo.title" @blur="doneEditing(todo, index)" @keyup.enter="doneEditing(todo)" @keyup.esc="cancelEditing(todo)" v-focus>
       </div>
       <div class="todo__delete" @click="removeTodo(index)">x</div>
@@ -74,7 +75,6 @@ export default {
     },
 
     doneEditing(todo, index){
-      console.log(todo.title.trim().length)
       if (todo.title.trim().length == 0){
         console.log("item devient vide")
         this.todos.splice(index,1)}
@@ -105,7 +105,7 @@ export default {
 }
 
 .todo__input:focus{
-  outline: 0;
+  outline: none;
 }
 
 .todo__list{
@@ -114,6 +114,15 @@ export default {
   justify-content: space-between;
   align-items: center;
 
+}
+
+.todo__content{
+  display: flex;
+}
+
+.todo__completed{
+  text-decoration: line-through;
+  color: gray;
 }
 
 .todo__delete{
