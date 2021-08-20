@@ -58,11 +58,14 @@ export default {
   },
   computed: {
     remaining() {
-      return this.todos.filter(todo => !todo.completed).length
+      let remaining = this.todos.filter(todo => !todo.completed).length
+      if(remaining > 0){return remaining}
+      else { return }
     },
     textRemaining(){
-      if (this.remaining == 0) {return "tâche restante"}
-      else {return "tâches restantes"}
+      if (this.remaining > 1) {return "tâches restantes"}
+      else if(this.remaining == 1) {return "tâche restante"}
+      else {return "Aucune tâche à faire"}
     }
     ,
     anyRemaining(){
