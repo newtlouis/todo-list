@@ -12,7 +12,7 @@
     </div>
     <div class="bottom__container">
       <div><label><input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos">Tout selectionné</label></div>
-      <div>{{remaining}} tâches restantes</div>
+      <div>{{remaining}} {{textRemaining}}</div>
     </div>
   </div>
 </template>
@@ -60,6 +60,11 @@ export default {
     remaining() {
       return this.todos.filter(todo => !todo.completed).length
     },
+    textRemaining(){
+      if (this.remaining == 0) {return "tâche restante"}
+      else {return "tâches restantes"}
+    }
+    ,
     anyRemaining(){
       return this.remaining != 0;
     }
@@ -104,7 +109,6 @@ export default {
       this.todos.splice(index,1)
     },
     checkAllTodos(){
-      console.log(event.target.checked)
       this.todos.forEach(todo => todo.completed = event.target.checked)
     }
   }
@@ -157,10 +161,13 @@ export default {
 .bottom__container{
   display: flex;
   justify-content: space-between;
-  padding: 20px 0;
+  padding: 10px 0;
+  margin: 30px 0;
+  border-top: solid gray;
 
-  
 }
+
+
 
 </style> 
 
