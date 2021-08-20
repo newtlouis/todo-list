@@ -5,7 +5,7 @@
 
       <div class="todo__content">
         <div class="todo__content__title" v-if="!todo.editing" @click="editTodo(todo)">{{todo.title}}</div>
-        <input class="todo__content__input" type="text" v-else v-model="todo.title" @blur="doneEditing(todo)" @keyup.enter="doneEditing(todo)" @keyup.esc="cancelEditing(todo)" v-focus>
+        <input class="todo__content__input" type="text" v-else v-model="todo.title" @blur="doneEditing(todo, index)" @keyup.enter="doneEditing(todo)" @keyup.esc="cancelEditing(todo)" v-focus>
       </div>
       <div class="todo__delete" @click="removeTodo(index)">x</div>
       </div>
@@ -73,13 +73,18 @@ export default {
       todo.editing = true
     },
 
-    doneEditing(todo){
+    doneEditing(todo, index){
+      console.log(todo.title.trim().length)
+      if (todo.title.trim().length == 0){
+        console.log("item devient vide")
+        this.todos.splice(index,1)}
       todo.editing = false;
     },
 
     cancelEditing(todo){
-      todo.editing = false
       todo.title = this.beforeEditCache;
+      todo.editing = false
+
     },
     
     removeTodo(index){
