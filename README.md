@@ -1,4 +1,6 @@
-# todo-list
+Application TodoList créée avec VUE.js, uniquement partie Front End
+
+#todo-list
 
 > A Vue.js project
 
